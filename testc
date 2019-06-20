@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# use clang instead in gcc
+Compiler=clang
+
+
+FileName=$1
+FileFullName=$FileName.c
+
+# define path
+Current=.
+Src=$Current/src/$FileFullName
+
+echo "\nsource file is $Src" 
+
+# define output
+Target=test
+OutputDir=$Current/output
+
+
+# check output folder 
+if [ ! -d $OutputDir ]; 
+then
+    echo "create output folder: $OutputDir"
+    mkdir $OutputDir
+fi 
+
+echo "Compile start $(date)"
+$Compiler $Src -o $OutputDir/${FileName}_${Target} 
+
+if [ $? = "0" ]; 
+then
+    echo "Compile $FileName Success \n"
+    ./$OutputDir/${FileName}_${Target} 
+fi 
